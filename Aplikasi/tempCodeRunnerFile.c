@@ -1,0 +1,1 @@
+fscanf(user,"%s %s",username,pass);
