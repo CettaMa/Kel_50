@@ -4,7 +4,7 @@
 
 int i,j,k;
 
-int login(){
+int login(int *login){
 
     FILE *user;
     char username[20],inputusername[20],pass[20],inputpass[20];
@@ -21,23 +21,24 @@ int login(){
     {
         printf("File Error!\n");
     } else {
-        int login=0;
-        while (!feof(user) && login==0){
+        while (!feof(user) && *login==0){
         fscanf(user,"%s %s",username,pass);
         if (strcmp(inputusername,username)==0){
             if (strcmp(pass,inputpass)==0){
                 printf("log in berhasil!\n");
-                login=1;
+                *login=1;
             } else if (feof(user)) {
                 printf("Password salah!\n");
             }
         } else if(feof(user)) {
-            printf("Username Salah..\n");
+            printf("Password atau Username salah..\n");
         }
         }
     }
 }
 
 int main() {
-     login();
+    int login_mode=0;
+     login(&login_mode);
+     printf("%d\n",login_mode);
 }
