@@ -1,3 +1,3 @@
-cettama 1190
-dapino 69420
-apip sukmadi
+cettama 1190 useradmin
+dapino 69420 user
+apip sukmadi user
