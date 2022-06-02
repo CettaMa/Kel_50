@@ -4,6 +4,48 @@
 
 int i,j,k;
 
+void regestrasi(){
+
+    FILE *fp;
+    fp=fopen("user.txt","a");
+
+    char username[20],pass[20],passcheck[20],konci[20];
+    int pilihan;
+
+    printf("Masukan username anda\t:");
+    fgets(username,20,stdin);
+    strtok(username,"\n");
+    printf("Masukan password anda\t:");
+    fgets(pass,20,stdin);
+    strtok(pass,"\n");
+    printf("Masukan kembali password anda\t:");
+    fgets(passcheck,20,stdin);
+    strtok(passcheck,"\n");
+    if (strcmp(pass,passcheck)==0)
+    {
+        printf("Satu langkah lagi..\n");
+        printf("Anda berperan sebagai?\n[1].Admin\n[2].Mahasiswa\n");
+        scanf("%d",&pilihan);
+        scanf("%*c");
+        if (pilihan==1)
+        {
+            printf("Masukan kata kunci!\n");
+            fgets(konci,20,stdin);
+            strtok(konci,"\n");
+            if (strcmp(konci,"admin_plz")==0)
+            {
+                printf("Regestrasi Berhasil!\n");
+                fprintf(fp,"%s %s %s", username,pass,"useradmin\n");
+            } else {
+                printf("Kata kunci salah, kamu bohong!\n");
+            }
+        } else {
+            fprintf(fp,"%s %s %s", username,pass,"user\n");
+        }
+    }
+    fclose(fp);
+}
+
 int login(int *login,int *profilmode){
 
     FILE *user;
@@ -59,8 +101,22 @@ int mahasiswa(){
 }
 
 int main() {
-    int status=0,mode=0;
-     login(&status,&mode);
+    int status=0,mode=0, pilihan;
+
+    printf("sudah punya akun?~\n[1].Sudah\n[2].Belum\n");
+    scanf("%d",&pilihan);
+    scanf("%*c");
+    switch (pilihan)
+    {
+    case 1:
+        login(&status,&mode);
+        break;
+    
+    default:
+        regestrasi();
+        login(&status,&mode);
+        break;
+    }
 
      switch (mode)
      {
