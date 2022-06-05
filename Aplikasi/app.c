@@ -88,9 +88,77 @@ int login(int *login,int *profilmode){
 
 int administrator() {
     //kode untuk login sebagai administrator
-    int option;
+   ///CATATAN
+    /*
+    1. Gw Bikin file baru buat  data Mahasiswa, ribet nyarinya nanti kalo dicampur(gw masih mikir mikir kalo yg dicampur)
+    2. Masih bingung cara nempelin data-data ke nama mahasiswa lewat arrStruct
+    3. Itu Pak, file yg mahasiswa.txt larinya kemana ye?
+    4. ~(0_0)~ lagi gw lanjutin, masih nyoba nyoba dicodeblocks 
+    */
+    //kode untuk login sebagai administrator
+    FILE *fpm;
+    fpm=fopen("mahasiswa.txt","r");
+    int option,i,N;
+    struct Mahasiswa{
+        char  nama[40];
+        int  nim;
+        int nilai;
+        char indeks;
+    }mhs[i];
+    //struct Mahasiswa mhs[i],arrmhs[i];
+
     printf("\t== Option ==\n");
-    printf("[1] Daftar Mahasiswa\n[2] Cari Mahasiswa\n[3]---\n[4]---\n[5]---\n[6]---\n");
+    printf("[1] Daftar Mahasiswa\n[2] Menghapus Data Mahasiswa\n[3] Mengedit Data Mahasiswa\n[4] Regristasi Mahasiswa\n[5] Mengisi Nilai Mahasiswa\n");
+    scanf("%d",&option);
+    scanf("%*c");
+    switch (option)
+    {
+    //Melihat Daftar Mahasiswa
+    case 1:
+        while (!feof(fpm)){
+        fgets(mhs[i].nama, sizeof(mhs[i].nama), (FILE*)fpm);
+        fscanf(fpm, "%d\n", &mhs[i].nim);
+        fscanf(fpm, "%d\n", &mhs[i].nilai);
+        }
+        fclose(fpm);
+        break;
+    //Menghapus Data Mahasiswa
+    case 2:
+        fclose(fpm);
+        break;
+    //Mengedit Data Mahasiswa
+    case 3:
+        fclose(fpm);
+        break;
+    //Registrasi Mahasiswa
+    case 4:
+        printf("Masukkan jumlah mahasiswa yang ingin diinputkan datanya: ");
+        scanf("%d", &N);
+        scanf("%*c");
+        i=N;
+        for (i=0;i<N;i++){
+        printf("Masukkan Nama Mahasiswa ");
+        fflush(stdin);
+        fgets(mhs[i].nama, 40, stdin);
+        strtok(mhs[i].nama,"\n");
+        printf("Masukkan NIM Mahasiswa : ");
+        scanf("%d", &mhs[i].nim);
+        scanf("%*c");
+        printf("Masukkan Nilai : ");
+        scanf("%d", &mhs[i].nilai);
+        scanf("%*c");
+
+        fprintf(fpm,"%s\n",mhs[i].nama);
+        fprintf(fpm,"%d\n",mhs[i].nim);
+        fprintf(fpm,"%d\n",mhs[i].nilai);
+        }
+        fclose(fpm);
+        break;
+    //Mengisi Nilai Mahasiswa
+    default:
+
+        break;
+    }
 }
 
 int mahasiswa(){
