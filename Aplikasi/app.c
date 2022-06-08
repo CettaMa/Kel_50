@@ -105,6 +105,7 @@ int login(int *login,int *profilmode,int *NIM){
 //kode untuk login sebagai administrator
 int administrator() {
     int option,i,N;
+    FILE *fpm;
     //struct Mahasiswa mhs[i],arrmhs[i]; (struct mahasiswa nanti dipindah ke global ae, dibawah include)
     printf("\t== Option ==\n");
     printf("[1] Daftar Mahasiswa\n[2] Menghapus Data Mahasiswa\n[3] Mengedit Data Mahasiswa\n[4] Regristasi Mahasiswa\n[5] Mengisi Nilai Mahasiswa\n");
@@ -114,7 +115,6 @@ int administrator() {
     {
     //Melihat Daftar Mahasiswa
     case 1:
-    FILE *fpm;
     fpm=fopen("mahasiswa.txt","r");
         while (!feof(fpm)){
         fgets(mhs[i].nama, sizeof(mhs[i].nama), (FILE*)fpm);
@@ -125,19 +125,16 @@ int administrator() {
         break;
     //Menghapus Data Mahasiswa
     case 2:
-    FILE *fpm;
     fpm=fopen("mahasiswa.txt","r+");
         fclose(fpm);
         break;
     //Mengedit Data Mahasiswa
     case 3:
-    FILE *fpm;
     fpm=fopen("mahasiswa.txt","r+");
         fclose(fpm);
         break;
     //Registrasi Mahasiswa
     case 4:
-    FILE *fpm;
     fpm=fopen("mahasiswa.txt","w+");
         printf("Masukkan jumlah mahasiswa yang ingin diinputkan datanya: ");
         scanf("%d", &N);
@@ -187,6 +184,7 @@ int mahasiswa(){
     }
 
 }
+
 
 int main() {
     int status=0,mode=0, pilihan, nim;
