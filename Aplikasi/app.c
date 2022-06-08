@@ -111,10 +111,14 @@ int main() {
     case 1:
         login(&status,&mode);
         break;
-    
-    default:
+
+    case 2:
         regestrasi();
         login(&status,&mode);
+        break;
+    
+    default:
+        printf("Terjadi error!!\n");
         break;
     }
 
