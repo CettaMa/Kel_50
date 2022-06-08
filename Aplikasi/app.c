@@ -10,7 +10,7 @@ void regestrasi(){
     fp=fopen("user.txt","a");
 
     char username[20],pass[20],passcheck[20],konci[20];
-    int pilihan;
+    int pilihan,nim;
 
     printf("Masukan username anda\t:");
     fgets(username,20,stdin);
@@ -34,19 +34,24 @@ void regestrasi(){
             strtok(konci,"\n");
             if (strcmp(konci,"admin_plz")==0)
             {
+                printf("Masukan Nomor Induk\t:");
+                scanf("%d",&nim);
                 printf("Regestrasi Berhasil!\n");
-                fprintf(fp,"%s %s %s", username,pass,"useradmin\n");
+                fprintf(fp,"%d %s %s %s",nim,username,pass,"useradmin\n");
             } else {
                 printf("Kata kunci salah, kamu bohong!\n");
             }
         } else {
-            fprintf(fp,"%s %s %s", username,pass,"user\n");
+            printf("Masukan NIM\t:");
+            scanf("%d",&nim);
+            fprintf(fp,"%d %s %s %s",nim,username,pass,"user\n");
         }
     }
+    printf("%d",nim);
     fclose(fp);
 }
 
-int login(int *login,int *profilmode){
+int login(int *login,int *profilmode,int *NIM){
 
     FILE *user;
     char username[20],inputusername[20],pass[20],inputpass[20],mode[10];
@@ -64,7 +69,7 @@ int login(int *login,int *profilmode){
         printf("File Error!\n");
     } else {
         while (!feof(user) && *login==0){
-        fscanf(user,"%s %s %s",username,pass,mode);
+        fscanf(user,"%i %s %s %s",*&NIM,username,pass,mode);
         if (strcmp(inputusername,username)==0){
             if (strcmp(pass,inputpass)==0){
                 printf("log in berhasil!\n\n");
@@ -84,6 +89,8 @@ int login(int *login,int *profilmode){
         }
         }
     }
+    printf("%d",*NIM);
+    fclose(user);
 }
 
 int administrator() {
@@ -92,10 +99,12 @@ int administrator() {
     /*
     1. Gw Bikin file baru buat  data Mahasiswa, ribet nyarinya nanti kalo dicampur(gw masih mikir mikir kalo yg dicampur)
     2. Masih bingung cara nempelin data-data ke nama mahasiswa lewat arrStruct
-    3. Itu Pak, file yg mahasiswa.txt larinya kemana ye?
+    3. Itu Pak, file yg mahasiswa.txt larinya kemana ye? (lu pake mode r pak, coba ganti ke mode w ato r+)
     4. ~(0_0)~ lagi gw lanjutin, masih nyoba nyoba dicodeblocks 
     */
     //kode untuk login sebagai administrator
+    
+    //catatan: kalo deklarasi file di tiap fungsi aja, soalnya mode yang dipake beda beda
     FILE *fpm;
     fpm=fopen("mahasiswa.txt","r");
     int option,i,N;
@@ -105,7 +114,7 @@ int administrator() {
         int nilai;
         char indeks;
     }mhs[i];
-    //struct Mahasiswa mhs[i],arrmhs[i];
+    //struct Mahasiswa mhs[i],arrmhs[i]; (struct mahasiswa nanti dipindah ke global ae, dibawah include)
 
     printf("\t== Option ==\n");
     printf("[1] Daftar Mahasiswa\n[2] Menghapus Data Mahasiswa\n[3] Mengedit Data Mahasiswa\n[4] Regristasi Mahasiswa\n[5] Mengisi Nilai Mahasiswa\n");
@@ -136,7 +145,7 @@ int administrator() {
         scanf("%d", &N);
         scanf("%*c");
         i=N;
-        for (i=0;i<N;i++){
+        for (i=0;i<N;i++){ //i++? ato i--?
         printf("Masukkan Nama Mahasiswa ");
         fflush(stdin);
         fgets(mhs[i].nama, 40, stdin);
@@ -165,11 +174,22 @@ int mahasiswa(){
     int option;
     //kode untuk login sebagai user biasa
     printf("\t== Option ==\n\n");
-    printf("[1] Mahasiswa\n[2] Cari Mahasiswa\n[3]---\n[4]---\n[5]---\n[6]---\n");
+    printf("[1] Data diri\n[2] Lihat Nilai\n");
+    scanf("%d",&option);
+    switch (option)
+    {
+    case /* constant-expression */:
+        /* code */
+        break;
+    
+    default:
+        break;
+    }
+
 }
 
 int main() {
-    int status=0,mode=0, pilihan;
+    int status=0,mode=0, pilihan, nim;
 
     printf("sudah punya akun?~\n[1].Sudah\n[2].Belum\n");
     scanf("%d",&pilihan);
@@ -177,12 +197,12 @@ int main() {
     switch (pilihan)
     {
     case 1:
-        login(&status,&mode);
+        login(&status,&mode,&nim);
         break;
 
     case 2:
         regestrasi();
-        login(&status,&mode);
+        login(&status,&mode,&nim);
         break;
     
     default:
