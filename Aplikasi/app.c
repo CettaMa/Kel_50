@@ -176,15 +176,7 @@ int mahasiswa(){
     printf("\t== Option ==\n\n");
     printf("[1] Data diri\n[2] Lihat Nilai\n");
     scanf("%d",&option);
-    switch (option)
-    {
-    case /* constant-expression */:
-        /* code */
-        break;
     
-    default:
-        break;
-    }
 
 }
 
