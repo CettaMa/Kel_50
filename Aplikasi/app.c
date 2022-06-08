@@ -115,11 +115,13 @@ int administrator() {
     {
     //Melihat Daftar Mahasiswa
     case 1:
-    fpm=fopen("mahasiswa.txt","r");
-        while (!feof(fpm)){
-        fgets(mhs[i].nama, sizeof(mhs[i].nama), (FILE*)fpm);
-        fscanf(fpm, "%d\n", &mhs[i].nim);
-        fscanf(fpm, "%d\n", &mhs[i].nilai);
+        i=0;
+        fpm=fopen("mahasiswa.txt","r");
+        printf("Daftar Mahasiswa\t:");
+        while (!feof(fpm))
+        {
+            fread(&mhs[i],sizeof(mhs[i]),1,fpm);
+            printf("%d %s\n",mhs[i].nim,mhs[i].nama);
         }
         fclose(fpm);
         break;
@@ -135,22 +137,22 @@ int administrator() {
         break;
     //Registrasi Mahasiswa
     case 4:
-    fpm=fopen("mahasiswa.txt","w+");
+    fpm=fopen("mahasiswa.txt","a+");
         printf("Masukkan jumlah mahasiswa yang ingin diinputkan datanya: ");
         scanf("%d", &N);
         scanf("%*c");
         for (i=0;i<N;i++){ //i++? ato i--?
         printf("Masukkan Nama Mahasiswa ");
         fflush(stdin);
-        fgets(mhs[i].nama, 40, stdin);
-        strtok(mhs[i].nama,"\n");
+        fgets(temp.nama, 40, stdin);
+        strtok(temp.nama,"\n");
         printf("Masukkan NIM Mahasiswa : ");
-        scanf("%d", &mhs[i].nim);
+        scanf("%d", &temp.nim);
         scanf("%*c");
         printf("Masukkan Nilai : ");
-        scanf("%d", &mhs[i].nilai);
+        scanf("%d", &temp.nilai);
         scanf("%*c");
-        fwrite(&temp, sizeof(temp),1,fpm);
+        fwrite(&temp,sizeof(temp),1,fpm);
         }
         /*
         fprintf(fpm,"%s\n",mhs[i].nama);
