@@ -1,1 +1,2 @@
 # Kel_50
+Program yang memanejemen data mahasiswa, saat anda log in sebagai mahasiswa, anda bisa melakukan hal seperti menampilkan data diri, nilai, dan peringkat siswa secara keseluruhan. saat anda log in sebagai administrasi, anda bisa melakukan registrasi data mahasiswa, meng-input nilai, ipk, dan grade mahasiswa, menghapus data mahasiswa, dan mengedit data mahasiswa
