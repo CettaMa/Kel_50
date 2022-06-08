@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct Mahasiswa{
+        char  nama[40];
+        int  nim;
+        int nilai;
+        char indeks;
+    }mhs[50],temp;
+
 int i,j,k;
 
 void regestrasi(){
@@ -93,29 +100,12 @@ int login(int *login,int *profilmode,int *NIM){
     fclose(user);
 }
 
-int administrator() {
-    //kode untuk login sebagai administrator
-   ///CATATAN
-    /*
-    1. Gw Bikin file baru buat  data Mahasiswa, ribet nyarinya nanti kalo dicampur(gw masih mikir mikir kalo yg dicampur)
-    2. Masih bingung cara nempelin data-data ke nama mahasiswa lewat arrStruct
-    3. Itu Pak, file yg mahasiswa.txt larinya kemana ye? (lu pake mode r pak, coba ganti ke mode w ato r+)
-    4. ~(0_0)~ lagi gw lanjutin, masih nyoba nyoba dicodeblocks 
-    */
-    //kode untuk login sebagai administrator
-    
-    //catatan: kalo deklarasi file di tiap fungsi aja, soalnya mode yang dipake beda beda
-    FILE *fpm;
-    fpm=fopen("mahasiswa.txt","r");
-    int option,i,N;
-    struct Mahasiswa{
-        char  nama[40];
-        int  nim;
-        int nilai;
-        char indeks;
-    }mhs[i];
-    //struct Mahasiswa mhs[i],arrmhs[i]; (struct mahasiswa nanti dipindah ke global ae, dibawah include)
 
+
+//kode untuk login sebagai administrator
+int administrator() {
+    int option,i,N;
+    //struct Mahasiswa mhs[i],arrmhs[i]; (struct mahasiswa nanti dipindah ke global ae, dibawah include)
     printf("\t== Option ==\n");
     printf("[1] Daftar Mahasiswa\n[2] Menghapus Data Mahasiswa\n[3] Mengedit Data Mahasiswa\n[4] Regristasi Mahasiswa\n[5] Mengisi Nilai Mahasiswa\n");
     scanf("%d",&option);
@@ -124,6 +114,8 @@ int administrator() {
     {
     //Melihat Daftar Mahasiswa
     case 1:
+    FILE *fpm;
+    fpm=fopen("mahasiswa.txt","r");
         while (!feof(fpm)){
         fgets(mhs[i].nama, sizeof(mhs[i].nama), (FILE*)fpm);
         fscanf(fpm, "%d\n", &mhs[i].nim);
@@ -133,18 +125,23 @@ int administrator() {
         break;
     //Menghapus Data Mahasiswa
     case 2:
+    FILE *fpm;
+    fpm=fopen("mahasiswa.txt","r+");
         fclose(fpm);
         break;
     //Mengedit Data Mahasiswa
     case 3:
+    FILE *fpm;
+    fpm=fopen("mahasiswa.txt","r+");
         fclose(fpm);
         break;
     //Registrasi Mahasiswa
     case 4:
+    FILE *fpm;
+    fpm=fopen("mahasiswa.txt","w+");
         printf("Masukkan jumlah mahasiswa yang ingin diinputkan datanya: ");
         scanf("%d", &N);
         scanf("%*c");
-        i=N;
         for (i=0;i<N;i++){ //i++? ato i--?
         printf("Masukkan Nama Mahasiswa ");
         fflush(stdin);
@@ -156,11 +153,14 @@ int administrator() {
         printf("Masukkan Nilai : ");
         scanf("%d", &mhs[i].nilai);
         scanf("%*c");
-
+        fwrite(&temp, sizeof(temp),1,fpm);
+        }
+        /*
         fprintf(fpm,"%s\n",mhs[i].nama);
         fprintf(fpm,"%d\n",mhs[i].nim);
         fprintf(fpm,"%d\n",mhs[i].nilai);
         }
+        */
         fclose(fpm);
         break;
     //Mengisi Nilai Mahasiswa
@@ -176,7 +176,15 @@ int mahasiswa(){
     printf("\t== Option ==\n\n");
     printf("[1] Data diri\n[2] Lihat Nilai\n");
     scanf("%d",&option);
+    switch (option)
+    {
+    case 1: 
+        /* code */
+        break;
     
+    default:
+        break;
+    }
 
 }
 
