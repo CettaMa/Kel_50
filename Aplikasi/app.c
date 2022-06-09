@@ -127,17 +127,17 @@ int administrator() {
         break;
     //Menghapus Data Mahasiswa
     case 2:
-    fpm=fopen("mahasiswa.txt","r+");
+        fpm=fopen("mahasiswa.txt","r+");
         fclose(fpm);
         break;
     //Mengedit Data Mahasiswa
     case 3:
-    fpm=fopen("mahasiswa.txt","r+");
+        fpm=fopen("mahasiswa.txt","r+");
         fclose(fpm);
         break;
     //Registrasi Mahasiswa
     case 4:
-    fpm=fopen("mahasiswa.txt","a+");
+        fpm=fopen("mahasiswa.txt","a+");
         printf("Masukkan jumlah mahasiswa yang ingin diinputkan datanya: ");
         scanf("%d", &N);
         scanf("%*c");
@@ -154,20 +154,18 @@ int administrator() {
         scanf("%*c");
         fwrite(&temp,sizeof(temp),1,fpm);
         }
-        /*
-        fprintf(fpm,"%s\n",mhs[i].nama);
-        fprintf(fpm,"%d\n",mhs[i].nim);
-        fprintf(fpm,"%d\n",mhs[i].nilai);
-        }
-        */
+
         fclose(fpm);
         break;
     //Mengisi Nilai Mahasiswa
     default:
+        fpm=fopen("mahasiswa.txt","a+");
 
+        fclose(fpm);
         break;
     }
 }
+
 
 int mahasiswa(){
     int option;
