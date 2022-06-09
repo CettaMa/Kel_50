@@ -123,17 +123,47 @@ int administrator() {
             fread(&mhs[i],sizeof(mhs[i]),1,fpm);
             printf("%d %s\n",mhs[i].nim,mhs[i].nama);
         }
+        /*
+        //Sorting 
+        for(data=0;data<5;data++){ //~
+        for(i=0;i<5;i++){ //Ganti ke while(!feof(fpm))//
+            if(mhs[i].nama[0]>mhs[data].nama[0]){ //Ganti ke .nim//
+                temp = mhs[data]; 
+                mhs[data] = mhs[i];
+                mhs[i] = temp;
+            }
+        }
+        }
+        */
+        //Searching
         fclose(fpm);
         break;
     //Menghapus Data Mahasiswa
     case 2:
+        i=0;
         fpm=fopen("mahasiswa.txt","r+");
+        printf("Daftar Mahasiswa\t:");
+        while (!feof(fpm))
+        {
+            fread(&mhs[i],sizeof(mhs[i]),1,fpm);
+            printf("%d %s\n",mhs[i].nim,mhs[i].nama);
+        }
+        //Sorting
+        //Searching
         fclose(fpm);
         break;
     //Mengedit Data Mahasiswa
     case 3:
+        i=0;
         fpm=fopen("mahasiswa.txt","r+");
-        fclose(fpm);
+        printf("Daftar Mahasiswa\t:");
+        while (!feof(fpm))
+        {
+            fread(&mhs[i],sizeof(mhs[i]),1,fpm);
+            printf("%d %s\n",mhs[i].nim,mhs[i].nama);
+        }
+        //Sorting
+        //Searching
         break;
     //Registrasi Mahasiswa
     case 4:
@@ -154,13 +184,23 @@ int administrator() {
         scanf("%*c");
         fwrite(&temp,sizeof(temp),1,fpm);
         }
-
+        //Menampilkan Daftar setelah penambahan
+        /*
+        i=0;
+        printf("Daftar Mahasiswa\t:");
+        while (!feof(fpm))
+        {
+            fread(&mhs[i],sizeof(mhs[i]),1,fpm);
+            printf("%d %s\n",mhs[i].nim,mhs[i].nama);
+        }
+        */
         fclose(fpm);
         break;
     //Mengisi Nilai Mahasiswa
     default:
         fpm=fopen("mahasiswa.txt","a+");
-
+        //Sorting
+        //Searching 
         fclose(fpm);
         break;
     }
