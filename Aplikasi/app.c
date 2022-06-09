@@ -9,6 +9,13 @@ struct Mahasiswa{
         char indeks;
     }mhs[50],temp;
 
+struct Data{
+        int   nim;
+        int   nilai;
+        float ipk;
+        char  grade[2];
+    }nilai;
+
 int i,j,k;
 
 void regestrasi(){
@@ -209,20 +216,32 @@ int administrator() {
 
 int mahasiswa(){
     int option;
+    FILE *fm;
     //kode untuk login sebagai user biasa
-    printf("\t== Option ==\n\n");
+    printf("\t== Option ==\n");
     printf("[1] Data diri\n[2] Lihat Nilai\n");
     scanf("%d",&option);
+    scanf("%*c");
     switch (option)
     {
+    ///Melihat data diri
     case 1: 
-        /* code */
+    fm=fopen("data diri.txt","r");
+        while (!feof(fm)){
+        fscanf(fm, "%s %d",temp.nama, &temp.nim);
+        printf("%s %d\n", temp.nama, temp.nim);
+        }
+        fclose(fm);
         break;
-    
-    default:
+    case 2:
+    fm=fopen("data nilai.txt","r");
+        while (!feof(fm)){
+        fscanf(fm, "%d %f %s %d", &nilai.nim, &nilai.ipk, nilai.grade, &nilai.nilai);
+        printf("%d %.2f %s %d\n", nilai.nim, nilai.ipk, nilai.grade, nilai.nilai);
+        }
+        fclose(fm);
         break;
     }
-
 }
 
 
