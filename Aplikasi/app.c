@@ -111,7 +111,7 @@ int login(int *login,int *profilmode,int *NIM){
 
 //kode untuk login sebagai administrator
 int administrator() {
-    int option,i,N;
+    int option,i,j=0,k,N,cari,indeks=-1,loop;
     FILE *fpm;
     //struct Mahasiswa mhs[i],arrmhs[i]; (struct mahasiswa nanti dipindah ke global ae, dibawah include)
     printf("\t== Option ==\n");
@@ -124,24 +124,15 @@ int administrator() {
     case 1:
         i=0;
         fpm=fopen("mahasiswa.txt","r");
-        printf("Daftar Mahasiswa\t:");
-        while (!feof(fpm))
+        printf("Daftar Mahasiswa\t:\n");
+        while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL)
         {
-            fread(&mhs[i],sizeof(mhs[i]),1,fpm);
-            printf("%d %s\n",mhs[i].nim,mhs[i].nama);
+            printf("%d\t%s\t%.2f\t%c\n",mhs[i].nim,mhs[i].nama,mhs[i].ipk,mhs[i].indeks);
+            i++;
         }
-
         /*
         //Sorting 
-        for(data=0;data<5;data++){ 
-        for(i=0;i<5;i++){ //Ganti ke while(!feof(fpm))//
-            if(mhs[i].nama[0]>mhs[data].nama[0]){ //Ganti ke .nim//
-                temp = mhs[data]; 
-                mhs[data] = mhs[i];
-                mhs[i] = temp;
-            }
-        }
-        }
+        
         */
 
         //Searching
@@ -150,15 +141,52 @@ int administrator() {
     //Menghapus Data Mahasiswa
     case 2:
         i=0;
-        fpm=fopen("mahasiswa.txt","r+");
-        printf("Daftar Mahasiswa\t:");
-        while (!feof(fpm))
+        fpm=fopen("mahasiswa.txt","r");
+        while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL)
         {
-            fread(&mhs[i],sizeof(mhs[i]),1,fpm);
             printf("%d %s\n",mhs[i].nim,mhs[i].nama);
+            i++;
         }
+        fclose(fpm);
+        fpm=fopen("mahasiswa.txt","w+");
+        printf("Masukan NIM mahasiswa yang anda ingin Hapus: ");
+        scanf("%d",&cari);
+        //Searching 
+        for ( j = 0; j < i; j++)
+        {
+            if (cari==mhs[j].nim)
+            {
+                indeks=j;
+                break;
+            }
+        }
+        if (indeks==-1)
+        {
+            printf("Mahasiswa tidak ditemukan!\n");
+        } else {
+            printf("Penghapusan data mahasiswa dimulai..\n");
+            strcpy(mhs[indeks].nama,"\0");
+            mhs[indeks].ipk=0;
+            mhs[indeks].nim=0;
+            mhs[indeks].indeks='\0';
+            printf("Penghapusan selesai\n");
+        }
+        for(j=0;j<i;j++){ 
+        for(k=1;k<i;k++){ //Ganti ke while(!feof(fpm))//
+            if(mhs[j].nim<mhs[k].nim){ //Ganti ke .nim//
+                temp = mhs[j]; 
+                mhs[j] = mhs[k];
+                mhs[k] = temp;
+            }
+        }
+        }
+        for ( j = 0; j < i; j++)
+        {
+            printf("%d\t%s\t%.2f\t%c\n",mhs[j].nim,mhs[j].nama,mhs[j].ipk,mhs[j].indeks);
+            fwrite(&mhs[j],sizeof(mhs[j]),1,fpm);
+        }
+        
         //Sorting
-        //Searching
         fclose(fpm);
         break;
     //Mengedit Data Mahasiswa
@@ -176,6 +204,7 @@ int administrator() {
         break;
     //Registrasi Mahasiswa
     case 4:
+        i=0;
         fpm=fopen("mahasiswa.txt","a+");
         printf("Masukkan jumlah mahasiswa yang ingin diinputkan datanya: ");
         scanf("%d", &N);
@@ -188,47 +217,71 @@ int administrator() {
         printf("Masukkan NIM Mahasiswa : ");
         scanf("%d", &temp.nim);
         scanf("%*c");
-        printf("Masukkan Nilai : ");
-        scanf("%f", &temp.ipk);
-        scanf("%*c");
         fwrite(&temp,sizeof(temp),1,fpm);
         }
         //Menampilkan Daftar setelah penambahan
-        /*
-        i=0;
-        printf("Daftar Mahasiswa\t:");
-        while (!feof(fpm))
+        printf("Daftar Mahasiswa\t:\n");
+        while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL)
         {
-            fread(&mhs[i],sizeof(mhs[i]),1,fpm);
-            printf("%d %s\n",mhs[i].nim,mhs[i].nama);
+            printf("%d\t%s\t%.2f\t%c\n",mhs[i].nim,mhs[i].nama,mhs[i].ipk,mhs[i].indeks);
+            i++;
         }
-        */
         fclose(fpm);
         break;
     //Mengisi Nilai Mahasiswa
-    default:
-        int cari;
-        fpm=fopen("mahasiswa.txt","a+");
-        printf("Masukan NIM mahasiswa yang anda ingin isi Nilainya: ");
+    case 5:
+        i=0;
+        fpm=fopen("mahasiswa.txt","r");
+        while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL)
+        {
+            printf("%d %s\n",mhs[i].nim,mhs[i].nama);
+            i++;
+        }
+        fclose(fpm);
+        fpm=fopen("mahasiswa.txt","w+");
+        printf("Masukan NIM mahasiswa yang anda ingin isi Nilainya:");
         scanf("%d",&cari);
         //Searching 
-        while(!feof(fpm) && (fread(&temp.ipk[i-1],sizeof(temp.ipk[i-1]),1,fpm)!=cari)){
-            if(temp[i]==cari){
-            printf("Data yang dicari berada pada indeks ke-%d",i);
-            break;
+        for ( j = 0; j < i; j++)
+        {
+            printf("Looping+1\n");
+            if (cari==mhs[j].nim)
+            {
+                indeks=j;
+                break;
             }
-            if(i==n-1){
-            printf("Data: %d yang dicari tidak ditemukan pada list",cari);
-            break;
+        }
+        if (indeks==-1)
+        {
+            printf("Mahasiswa tidak ditemukan!\n");
+        } else {
+            printf("Mahasiswa Ditemukan\n%d\t%s\n",mhs[indeks].nim,mhs[indeks].nama);
+            printf("Masukan nilai IPK\t:");
+            scanf("%f",&mhs[indeks].ipk);
+            for ( j = 0; j < i; j++)
+            {
+            fwrite(&mhs[j],sizeof(mhs[j]),1,fpm);
             }
-    }
-}
-
+        }
+        
+        
         //Sorting
         fclose(fpm);
         break;
-    }
+    default:
+        printf("Error..\n");
+        break;
+    }//end swict
 
+    printf("\nApakah Anda sudah selesai?\n[1] Ya\n[2] Tidak\n");
+    scanf("%d",&loop);
+    if (loop==2)
+    {
+        administrator();
+    } else {
+        printf("Operasi selesai!\n");
+    }
+}
 
 int mahasiswa(){
     int option;
@@ -262,7 +315,7 @@ int mahasiswa(){
 
 
 int main() {
-    int status=0,mode=0, pilihan, nim;
+    int status=0,mode=0, pilihan, nim,lanjut=1;
 
     printf("sudah punya akun?~\n[1].Sudah\n[2].Belum\n");
     scanf("%d",&pilihan);
@@ -286,7 +339,7 @@ int main() {
      switch (mode)
      {
      case 1:
-        administrator();
+            administrator();
          break;
      
      default:

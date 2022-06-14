@@ -1,1 +1,2 @@
- fwrite(&temp, sizeof(temp),1,fpm);
+fclose(fpm);
+        fpm=fopen("mahasiswa.txt","w+");
