@@ -5,8 +5,8 @@
 struct Mahasiswa{
         char  nama[40];
         int  nim;
-        int nilai;
         char indeks;
+        float ipk;
     }mhs[50],temp;
 
 struct Data{
@@ -130,9 +130,10 @@ int administrator() {
             fread(&mhs[i],sizeof(mhs[i]),1,fpm);
             printf("%d %s\n",mhs[i].nim,mhs[i].nama);
         }
+
         /*
         //Sorting 
-        for(data=0;data<5;data++){ //~
+        for(data=0;data<5;data++){ 
         for(i=0;i<5;i++){ //Ganti ke while(!feof(fpm))//
             if(mhs[i].nama[0]>mhs[data].nama[0]){ //Ganti ke .nim//
                 temp = mhs[data]; 
@@ -142,6 +143,7 @@ int administrator() {
         }
         }
         */
+
         //Searching
         fclose(fpm);
         break;
@@ -187,7 +189,7 @@ int administrator() {
         scanf("%d", &temp.nim);
         scanf("%*c");
         printf("Masukkan Nilai : ");
-        scanf("%d", &temp.nilai);
+        scanf("%f", &temp.ipk);
         scanf("%*c");
         fwrite(&temp,sizeof(temp),1,fpm);
         }
@@ -205,13 +207,27 @@ int administrator() {
         break;
     //Mengisi Nilai Mahasiswa
     default:
+        int cari;
         fpm=fopen("mahasiswa.txt","a+");
-        //Sorting
+        printf("Masukan NIM mahasiswa yang anda ingin isi Nilainya: ");
+        scanf("%d",&cari);
         //Searching 
+        while(!feof(fpm) && (fread(&temp.ipk[i-1],sizeof(temp.ipk[i-1]),1,fpm)!=cari)){
+            if(temp[i]==cari){
+            printf("Data yang dicari berada pada indeks ke-%d",i);
+            break;
+            }
+            if(i==n-1){
+            printf("Data: %d yang dicari tidak ditemukan pada list",cari);
+            break;
+            }
+    }
+}
+
+        //Sorting
         fclose(fpm);
         break;
     }
-}
 
 
 int mahasiswa(){
