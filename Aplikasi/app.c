@@ -123,15 +123,20 @@ int administrator() {
         {
             i++;
         }
-        for(j=0;j<i-1;j++){ 
-        for(k=0;k<i-j-1;k++){ 
-            if(mhs[j].nim>mhs[j+1].nim){ 
-                temp = mhs[j]; 
-                mhs[j] = mhs[j+1];
-                mhs[j+1] = temp;
+
+        for ( j = 0; j < i-1; j++)
+        {
+            for ( k = 0; k < i-j-1; k++)
+            {
+                if (mhs[k].nim>mhs[k+1].nim)
+                {
+                    temp = mhs[k];
+                    mhs[k] = mhs[k+1];
+                    mhs[k+1] = temp;
+                }
             }
         }
-        }
+        
         for ( j = 0; j < i; j++)
         {
             printf("%d\t%s\t%.2f\t%s\n",mhs[j].nim,mhs[j].nama,mhs[j].ipk,mhs[j].indeks);
@@ -172,14 +177,17 @@ int administrator() {
             printf("Penghapusan selesai\n");
         }
         printf("Mengurutkan..\n");
-        for(j=0;j<i-1;j++){ 
-        for(k=0;k<i-j-1;k++){ 
-            if(mhs[j].nim>mhs[j+1].nim){ 
-                temp = mhs[j]; 
-                mhs[j] = mhs[j+1];
-                mhs[j+1] = temp;
+        for ( j = 0; j < i-1; j++)
+        {
+            for ( k = 0; k < i-j-1; k++)
+            {
+                if (mhs[k].nim>mhs[k+1].nim)
+                {
+                    temp = mhs[k];
+                    mhs[k] = mhs[k+1];
+                    mhs[k+1] = temp;
+                }
             }
-        }
         }
         for ( j = 1; j < i; j++)
         {
