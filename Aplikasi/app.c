@@ -216,7 +216,7 @@ int administrator() {
             fwrite(&mhs[j],sizeof(mhs[j]),1,fpm);
             }
         } else {
-            printf("Mahasiswa ditemukan :\n%d\t%s\t%f\n",mhs[indeks].nim,mhs[indeks].nama,mhs[indeks].ipk);
+            printf("Mahasiswa ditemukan :\n%d\t%s\t%.2f\n",mhs[indeks].nim,mhs[indeks].nama,mhs[indeks].ipk);
             printf("Apa yang ingin anda edit?\n[1] Nama\n[2] NIM\n[3] IPK\n");
             scanf("%d",&piledit);
             scanf("%*c");
