@@ -121,8 +121,20 @@ int administrator() {
         printf("Daftar Mahasiswa\t:\n");
         while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL)
         {
-            printf("%d\t%s\t%.2f\t%s\n",mhs[i].nim,mhs[i].nama,mhs[i].ipk,mhs[i].indeks);
             i++;
+        }
+        for(j=0;j<i-1;j++){ 
+        for(k=0;k<i-j-1;k++){ 
+            if(mhs[j].nim>mhs[j+1].nim){ 
+                temp = mhs[j]; 
+                mhs[j] = mhs[j+1];
+                mhs[j+1] = temp;
+            }
+        }
+        }
+        for ( j = 0; j < i; j++)
+        {
+            printf("%d\t%s\t%.2f\t%s\n",mhs[j].nim,mhs[j].nama,mhs[j].ipk,mhs[j].indeks);
         }
         fclose(fpm);
         break;
@@ -207,7 +219,7 @@ int administrator() {
             }
         } else {
             printf("Mahasiswa ditemukan :\n%d\t%s\t%f\n",mhs[indeks].nim,mhs[indeks].nama,mhs[indeks].ipk);
-            printf("Apa yang ingin anda edit?\n[1] Nama\n[2] NIM\n[3] IPK");
+            printf("Apa yang ingin anda edit?\n[1] Nama\n[2] NIM\n[3] IPK\n");
             scanf("%d",&piledit);
             scanf("%*c");
             switch (piledit)
@@ -260,8 +272,10 @@ int administrator() {
             }
 
             for ( j = 0; j < i; j++){
-            fwrite(&mhs[j],sizeof(mhs[j]),1,fpm);
+                printf("%d\t%s\t%.2f\t%s\n",mhs[j].nim,mhs[j].nama,mhs[j].ipk,mhs[j].indeks);
+                fwrite(&mhs[j],sizeof(mhs[j]),1,fpm);
             }
+
         }
         fclose(fpm);
         break;
@@ -273,7 +287,7 @@ int administrator() {
         printf("Masukkan jumlah mahasiswa yang ingin diinputkan datanya: ");
         scanf("%d", &N);
         scanf("%*c");
-        for (i=0;i<N;i++){ 
+        for (j=0;j<N;j++){ 
         printf("Masukkan Nama Mahasiswa ");
         fflush(stdin);
         fgets(temp.nama, 40, stdin);
@@ -284,6 +298,7 @@ int administrator() {
         fwrite(&temp,sizeof(temp),1,fpm);
         }
         //Menampilkan Daftar setelah penambahan
+        rewind(fpm);
         printf("Daftar Mahasiswa\t:\n");
         while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL)
         {
@@ -358,7 +373,8 @@ int administrator() {
             
             for ( j = 0; j < i; j++)
             {
-            fwrite(&mhs[j],sizeof(mhs[j]),1,fpm);
+                printf("%d\t%s\t%.2f\t%s\n",mhs[j].nim,mhs[j].nama,mhs[j].ipk,mhs[j].indeks);
+                fwrite(&mhs[j],sizeof(mhs[j]),1,fpm);
             }
         }
         //Sorting
