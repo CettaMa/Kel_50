@@ -19,6 +19,7 @@ void regestrasi(){
     char username[20],pass[20],passcheck[20],konci[20];
     int pilihan,nim;
 
+    printf("\n\t==- MENU REGISTRASI -==\n");
     printf("Masukan username anda\t:");
     fgets(username,20,stdin);
     strtok(username,"\n");
@@ -67,7 +68,7 @@ int login(int *login,int *profilmode,int *NIM){
     FILE *user;
     char username[20],inputusername[20],pass[20],inputpass[20],mode[10];
 
-    printf("==- MENU LOGIN -==\n");
+    printf("\n\t==- MENU LOGIN -==\n");
     printf("Masukan Username anda\t:");
     fgets(inputusername,20,stdin);
     strtok(inputusername,"\n");
@@ -100,7 +101,6 @@ int login(int *login,int *profilmode,int *NIM){
         }
         }
     }
-    printf("%d",*NIM);
     fclose(user);
 }
 //kode untuk login sebagai administrator
@@ -110,6 +110,7 @@ int administrator() {
     //pilihan menu
     printf("\t== Option ==\n");
     printf("[1] Daftar Mahasiswa\n[2] Menghapus Data Mahasiswa\n[3] Mengedit Data Mahasiswa\n[4] Regristasi Mahasiswa\n[5] Mengisi Nilai Mahasiswa\n");
+    printf("Input\t:");
     scanf("%d",&option);
     scanf("%*c");
     switch (option)
@@ -118,7 +119,7 @@ int administrator() {
     case 1:
         i=0;
         fpm=fopen("mahasiswa.txt","r");
-        printf("Daftar Mahasiswa\t:\n");
+        printf("\nDaftar Mahasiswa :\n");
         //membaca file
         while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL){
             i++;
@@ -144,13 +145,14 @@ int administrator() {
         i=0;
         fpm=fopen("mahasiswa.txt","r");
         //membaca dan menampilkan data file
+        printf("\nDaftar Mahasiswa :\n");
         while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL){
             printf("%d %s\n",mhs[i].nim,mhs[i].nama);
             i++;
         }
         fclose(fpm);
         fpm=fopen("mahasiswa.txt","w+");
-        printf("Masukan NIM mahasiswa yang anda ingin Hapus: ");
+        printf("Masukan NIM mahasiswa yang anda ingin Hapus :");
         scanf("%d",&cari);
         //Searching 
         for ( j = 0; j < i; j++){
@@ -183,6 +185,7 @@ int administrator() {
             }
         }
         //menampilkan dan menulis data kedalam file
+        printf("\nDaftar Mahasiswa :\n");
         for ( j = 1; j < i; j++){
             printf("%d\t%s\t%.2f\t%s\n",mhs[j].nim,mhs[j].nama,mhs[j].ipk,mhs[j].indeks);
             fwrite(&mhs[j],sizeof(mhs[j]),1,fpm);
@@ -194,6 +197,7 @@ int administrator() {
         i=0;
         fpm=fopen("mahasiswa.txt","r");
         //membaca file
+        printf("\nDaftar Mahasiswa :\n");
         while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL){
             printf("%d %s\n",mhs[i].nim,mhs[i].nama);
             i++;
@@ -218,6 +222,7 @@ int administrator() {
         } else {
             printf("Mahasiswa ditemukan :\n%d\t%s\t%.2f\n",mhs[indeks].nim,mhs[indeks].nama,mhs[indeks].ipk);
             printf("Apa yang ingin anda edit?\n[1] Nama\n[2] NIM\n[3] IPK\n");
+            printf("Input\t:");
             scanf("%d",&piledit);
             scanf("%*c");
             //menu edit
@@ -269,12 +274,23 @@ int administrator() {
             }
                 break;
             }
+            //sorting
+            for ( j = 0; j < i-1; j++){
+            for ( k = 0; k < i-j-1; k++){
+                if (mhs[k].nim>mhs[k+1].nim)
+                {
+                    temp = mhs[k];
+                    mhs[k] = mhs[k+1];
+                    mhs[k+1] = temp;
+                }
+            }
+        }
             //menulis dan menampilkan data file
+            printf("\nDaftar Mahasiswa :\n");
             for ( j = 0; j < i; j++){
                 printf("%d\t%s\t%.2f\t%s\n",mhs[j].nim,mhs[j].nama,mhs[j].ipk,mhs[j].indeks);
                 fwrite(&mhs[j],sizeof(mhs[j]),1,fpm);
             }
-
         }
         fclose(fpm);
         break;
@@ -283,28 +299,43 @@ int administrator() {
     case 4:
         i=0;
         fpm=fopen("mahasiswa.txt","a+");
-        printf("Masukkan jumlah mahasiswa yang ingin diinputkan datanya: ");
+        printf("Masukkan jumlah mahasiswa yang ingin diinputkan datanya :");
         scanf("%d", &N);
         scanf("%*c");
         //input data mahasiswa
         for (j=0;j<N;j++){ 
-        printf("Masukkan Nama Mahasiswa ");
+        printf("Masukkan Nama Mahasiswa\t:");
         fflush(stdin);
         fgets(temp.nama, 40, stdin);
         strtok(temp.nama,"\n");
-        printf("Masukkan NIM Mahasiswa : ");
+        printf("Masukkan NIM Mahasiswa\t:");
         scanf("%d", &temp.nim);
         scanf("%*c");
         fwrite(&temp,sizeof(temp),1,fpm);
         }
         //Menampilkan Daftar setelah penambahan
         rewind(fpm);
-        printf("Daftar Mahasiswa\t:\n");
+        printf("\nDaftar Mahasiswa :\n");
         while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL)
         {
-            printf("%d\t%s\t%.2f\t%s\n",mhs[i].nim,mhs[i].nama,mhs[i].ipk,mhs[i].indeks);
             i++;
         }
+        //sorting
+        for ( j = 0; j < i-1; j++){
+            for ( k = 0; k < i-j-1; k++){
+                if (mhs[k].nim>mhs[k+1].nim)
+                {
+                    temp = mhs[k];
+                    mhs[k] = mhs[k+1];
+                    mhs[k+1] = temp;
+                }
+            }
+        }
+        for ( j = 0; j < i; j++)
+        {
+            printf("%d\t%s\t%.2f\t%s\n",mhs[j].nim,mhs[j].nama,mhs[j].ipk,mhs[j].indeks);
+        }
+        
         fclose(fpm);
         break;
     //Mengisi Nilai Mahasiswa
@@ -312,6 +343,7 @@ int administrator() {
         i=0;
         fpm=fopen("mahasiswa.txt","r");
         //membaca file
+        printf("\nDaftar Mahasiswa :\n");
         while (!feof(fpm) && (fread(&mhs[i],sizeof(mhs[i]),1,fpm))!=NULL)
         {
             printf("%d %s\n",mhs[i].nim,mhs[i].nama);
@@ -476,7 +508,7 @@ int mahasiswa(int NIM){
 int main() {
     int status=0,mode=0, pilihan, nim,lanjut=1;
     //pilihan apakah sudah punya akun atau belum
-    printf("Apakah anda sudah punya akun?\n[1].Sudah\n[2].Belum\n");
+    printf("Apakah anda sudah punya akun?\n[1].Sudah\n[2].Belum\nInput\t:");
     scanf("%d",&pilihan);
     scanf("%*c");
     //menjalankan prosedur berdasarkan pilihan
