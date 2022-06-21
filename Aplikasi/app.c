@@ -140,6 +140,7 @@ int administrator() {
         }
         fclose(fpm);
         break;
+        
     //Menghapus Data Mahasiswa
     case 2:
         i=0;
@@ -192,6 +193,7 @@ int administrator() {
         }
         fclose(fpm);
         break;
+
     //Mengedit Data Mahasiswa
     case 3:
         i=0;
@@ -339,6 +341,7 @@ int administrator() {
         fclose(fpm);
         break;
     //Mengisi Nilai Mahasiswa
+
     case 5:
         i=0;
         fpm=fopen("mahasiswa.txt","r");
@@ -418,6 +421,7 @@ int administrator() {
         printf("Error..\n");
         break;
     }//end swict
+
     //recursion
     printf("\nApakah Anda sudah selesai?\n[1] Ya\n[2] Tidak\n");
     scanf("%d",&loop);
@@ -466,6 +470,7 @@ int mahasiswa(int NIM){
             printf("Mahasiswa :\nNama\t:%s\nNIM\t:%d\n",mhs[indeks].nama,mhs[indeks].nim);
         }
         break;
+
     case 2:
         i=0;
         fpm=fopen("mahasiswa.txt","r");
@@ -504,7 +509,6 @@ int mahasiswa(int NIM){
     }
 }
 
-
 int main() {
     int status=0,mode=0, pilihan, nim,lanjut=1;
     //pilihan apakah sudah punya akun atau belum
@@ -517,12 +521,10 @@ int main() {
     case 1:
         login(&status,&mode,&nim);
         break;
-
     case 2:
         regestrasi();
         login(&status,&mode,&nim);
         break;
-    
     default:
         printf("Terjadi error!!\n");
         break;
@@ -533,7 +535,6 @@ int main() {
      case 1:
             administrator();
          break;
-     
      case 2:
             mahasiswa(nim);
         break;
